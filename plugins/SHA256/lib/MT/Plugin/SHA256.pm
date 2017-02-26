@@ -2,9 +2,9 @@ package MT::Plugin::SHA256;
 use strict;
 use warnings;
 
-my $Debug = 0;
-
 use Digest::SHA::PurePerl;
+
+use MT;
 
 sub init_app {
     require MT::Auth::MT;
@@ -21,7 +21,10 @@ sub init_app {
         my $real_pass = $author->column('password');
 
         if ($result) {
-            if ( $real_pass && $real_pass =~ /^{SHA}/ ) {
+            if (   MT->config->SHA256Update
+                && $real_pass
+                && $real_pass =~ /^{SHA}/ )
+            {
                 $author->set_password($pass);
                 $author->save or die;
             }
@@ -46,7 +49,7 @@ sub init_app {
         my $salt   = join '', map $alpha[ rand @alpha ], 1 .. 16;
         my $crypt_sha;
 
-        if ( !$Debug || eval { require Digest::SHA } ) {
+        if ( MT->config->SHA256Debug || eval { require Digest::SHA } ) {
 
             # Can use SHA512
             $crypt_sha

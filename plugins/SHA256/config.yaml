@@ -1,2 +1,7 @@
 name: SHA256
 init_app: $SHA256::MT::Plugin::SHA256::init_app
+config_settings:
+  SHA256Debug:
+    default: 0
+  SHA256Update:
+    default: 1
