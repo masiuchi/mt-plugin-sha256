@@ -49,7 +49,7 @@ sub init_app {
         my $salt   = join '', map $alpha[ rand @alpha ], 1 .. 16;
         my $crypt_sha;
 
-        if ( MT->config->SHA256Debug || eval { require Digest::SHA } ) {
+        if ( eval { require Digest::SHA } && !MT->config->SHA256Debug ) {
 
             # Can use SHA512
             $crypt_sha
