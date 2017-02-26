@@ -1,0 +1,2 @@
+name: SHA256
+init_app: $SHA256::MT::Plugin::SHA256::init_app
