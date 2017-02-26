@@ -2,6 +2,8 @@ package MT::Plugin::SHA256;
 use strict;
 use warnings;
 
+my $Debug = 0;
+
 use Digest::SHA::PurePerl;
 
 sub init_app {
@@ -44,7 +46,7 @@ sub init_app {
         my $salt   = join '', map $alpha[ rand @alpha ], 1 .. 16;
         my $crypt_sha;
 
-        if ( eval { require Digest::SHA } && 0 ) {
+        if ( !$Debug || eval { require Digest::SHA } ) {
 
             # Can use SHA512
             $crypt_sha
